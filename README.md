@@ -1,4 +1,4 @@
-Beispielanwendung "ÄNDERN"
+Beispielanwendung "JPV"
 =========================
 
 Kurzbeschreibung
