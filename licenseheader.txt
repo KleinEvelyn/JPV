@@ -1,0 +1,12 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}Copyright © ${date?date?string("yyyy")}  Evelyn Klein, Sven Hornung, Kevin Pfeffer
+${licensePrefix}
+${licensePrefix}DHBW Karlsruhe - @KleinEvelyn, @SvenHornung, @kpfeffer
+${licensePrefix}
+${licensePrefix}Dieser Quellcode ist lizenziert unter einer
+${licensePrefix}Creative Commons Namensnennung 4.0 International Lizenz.
+<#if licenseLast??>
+${licenseLast}
+</#if>
