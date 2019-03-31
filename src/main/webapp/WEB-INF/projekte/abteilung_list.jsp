@@ -19,7 +19,7 @@
     </jsp:attribute>
 
     <jsp:attribute name="head">
-        <link rel="stylesheet" href="<c:url value="/css/category_list.css"/>" />
+        <link rel="stylesheet" href="<c:url value="/css/abteilung_list.css"/>" />
     </jsp:attribute>
 
     <jsp:attribute name="menu">
@@ -28,7 +28,7 @@
         </div>
 
         <div class="menuitem">
-            <a href="<c:url value="/app/tasks/list/"/>">Liste</a>
+            <a href="<c:url value="/app/projekte/list/"/>">Liste</a>
         </div>
     </jsp:attribute>
 
@@ -40,7 +40,7 @@
             <%-- Feld zum Anlegen einer neuen Kategorie --%>
             <div class="column margin">
                 <label for="j_username">Neue Kategorie:</label>
-                <input type="text" name="name" value="${categories_form.values["name"][0]}">
+                <input type="text" name="name" value="${abteilungen_form.values["name"][0]}">
 
                 <button type="submit" name="action" value="create" class="icon-pencil">
                     Anlegen
@@ -48,9 +48,9 @@
             </div>
 
             <%-- Fehlermeldungen --%>
-            <c:if test="${!empty categories_form.errors}">
+            <c:if test="${!empty abteilungen_form.errors}">
                 <ul class="errors margin">
-                    <c:forEach items="${categories_form.errors}" var="error">
+                    <c:forEach items="${abteilungen_form.errors}" var="error">
                         <li>${error}</li>
                         </c:forEach>
                 </ul>
@@ -58,7 +58,7 @@
 
             <%-- Vorhandene Kategorien --%>
             <c:choose>
-                <c:when test="${empty categories}">
+                <c:when test="${empty abteilungen}">
                     <p>
                         Es sind noch keine Kategorien vorhanden. 🐏
                     </p>
@@ -66,10 +66,10 @@
                 <c:otherwise>
                     <div>
                         <div class="margin">
-                            <c:forEach items="${categories}" var="category">
-                                <input type="checkbox" name="category" id="${'category-'.concat(category.id)}" value="${category.id}" />
-                                <label for="${'category-'.concat(category.id)}">
-                                    <c:out value="${category.name}"/>
+                            <c:forEach items="${abteilungen}" var="abteilung">
+                                <input type="checkbox" name="abteilung" id="${'abteilung-'.concat(abteilung.id)}" value="${abteilung.id}" />
+                                <label for="${'abteilung-'.concat(abteilung.id)}">
+                                    <c:out value="${abteilung.name}"/>
                                 </label>
                                 <br />
                             </c:forEach>

@@ -7,12 +7,12 @@
  * Dieser Quellcode ist lizenziert unter einer
  * Creative Commons Namensnennung 4.0 International Lizenz.
  */
-package dhbw.jpv.tasks.jpa;
+package dhbw.jpv.projekte.jpa;
 
 /**
  * Statuswerte einer Aufgabe.
  */
-public enum TaskStatus {
+public enum ProjektStatus {
     OPEN, IN_PROGRESS, FINISHED, CANCELED, POSTPONED;
 
     /**

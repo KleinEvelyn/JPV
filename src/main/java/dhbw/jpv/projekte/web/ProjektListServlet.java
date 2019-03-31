@@ -7,13 +7,13 @@
  * Dieser Quellcode ist lizenziert unter einer
  * Creative Commons Namensnennung 4.0 International Lizenz.
  */
-package dhbw.jpv.tasks.web;
+package dhbw.jpv.projekte.web;
 
-import dhbw.jpv.tasks.ejb.CategoryBean;
-import dhbw.jpv.tasks.ejb.TaskBean;
-import dhbw.jpv.tasks.jpa.Category;
-import dhbw.jpv.tasks.jpa.Task;
-import dhbw.jpv.tasks.jpa.TaskStatus;
+import dhbw.jpv.projekte.ejb.AbteilungBean;
+import dhbw.jpv.projekte.ejb.ProjektBean;
+import dhbw.jpv.projekte.jpa.Abteilung;
+import dhbw.jpv.projekte.jpa.Projekt;
+import dhbw.jpv.projekte.jpa.ProjektStatus;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
@@ -27,13 +27,13 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet für die tabellarische Auflisten der Aufgaben.
  */
 @WebServlet(urlPatterns = {"/app/tasks/list/"})
-public class TaskListServlet extends HttpServlet {
+public class ProjektListServlet extends HttpServlet {
 
     @EJB
-    private CategoryBean categoryBean;
+    private AbteilungBean categoryBean;
     
     @EJB
-    private TaskBean taskBean;
+    private ProjektBean taskBean;
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -41,7 +41,7 @@ public class TaskListServlet extends HttpServlet {
 
         // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
         request.setAttribute("categories", this.categoryBean.findAllSorted());
-        request.setAttribute("statuses", TaskStatus.values());
+        request.setAttribute("statuses", ProjektStatus.values());
 
         // Suchparameter aus der URL auslesen
         String searchText = request.getParameter("search_text");
@@ -49,8 +49,8 @@ public class TaskListServlet extends HttpServlet {
         String searchStatus = request.getParameter("search_status");
 
         // Anzuzeigende Aufgaben suchen
-        Category category = null;
-        TaskStatus status = null;
+        Abteilung category = null;
+        ProjektStatus status = null;
 
         if (searchCategory != null) {
             try {
@@ -62,14 +62,14 @@ public class TaskListServlet extends HttpServlet {
 
         if (searchStatus != null) {
             try {
-                status = TaskStatus.valueOf(searchStatus);
+                status = ProjektStatus.valueOf(searchStatus);
             } catch (IllegalArgumentException ex) {
                 status = null;
             }
 
         }
 
-        List<Task> tasks = this.taskBean.search(searchText, category, status);
+        List<Projekt> tasks = this.taskBean.search(searchText, category, status);
         request.setAttribute("tasks", tasks);
 
         // Anfrage an die JSP weiterleiten

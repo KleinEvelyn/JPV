@@ -7,7 +7,7 @@
  * Dieser Quellcode ist lizenziert unter einer
  * Creative Commons Namensnennung 4.0 International Lizenz.
  */
-package dhbw.jpv.tasks.jpa;
+package dhbw.jpv.projekte.jpa;
 
 import dhbw.jpv.common.jpa.User;
 import java.io.Serializable;
@@ -27,24 +27,24 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * Eine zu erledigende Aufgabe.
+ * Projekt das in einer Abteilung durchgeführt wird
  */
 @Entity
-public class Task implements Serializable {
+public class Projekt implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "task_ids")
-    @TableGenerator(name = "task_ids", initialValue = 0, allocationSize = 50)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "projekt_ids")
+    @TableGenerator(name = "projekt_ids", initialValue = 0, allocationSize = 50)
     private long id;
 
     @ManyToOne
-    @NotNull(message = "Die Aufgabe muss einem Benutzer geordnet werden.")
+    @NotNull(message = "Das Projekt muss einem Benutzer zugeordnet werden.")
     private User owner;
 
     @ManyToOne
-    private Category category;
+    private Abteilung abteilung;
 
     @Column(length = 50)
     @NotNull(message = "Die Bezeichnung darf nicht leer sein.")
@@ -63,15 +63,15 @@ public class Task implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    private TaskStatus status = TaskStatus.OPEN;
+    private ProjektStatus status = ProjektStatus.OPEN;
 
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
-    public Task() {
+    public Projekt() {
     }
 
-    public Task(User owner, Category category, String shortText, String longText, Date dueDate, Time dueTime) {
+    public Projekt(User owner, Abteilung abteilung, String shortText, String longText, Date dueDate, Time dueTime) {
         this.owner = owner;
-        this.category = category;
+        this.abteilung = abteilung;
         this.shortText = shortText;
         this.longText = longText;
         this.dueDate = dueDate;
@@ -96,12 +96,12 @@ public class Task implements Serializable {
         this.owner = owner;
     }
 
-    public Category getCategory() {
-        return category;
+    public Abteilung getAbteilung() {
+        return abteilung;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setAbteilung(Abteilung abteilung) {
+        this.abteilung = abteilung;
     }
 
     public String getShortText() {
@@ -136,11 +136,11 @@ public class Task implements Serializable {
         this.dueTime = dueTime;
     }
 
-    public TaskStatus getStatus() {
+    public ProjektStatus getStatus() {
         return status;
     }
 
-    public void setStatus(TaskStatus status) {
+    public void setStatus(ProjektStatus status) {
         this.status = status;
     }
     //</editor-fold>

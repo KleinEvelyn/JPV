@@ -9,7 +9,7 @@
  */
 package dhbw.jpv.common.jpa;
 
-import dhbw.jpv.tasks.jpa.Task;
+import dhbw.jpv.projekte.jpa.Projekt;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -66,7 +66,7 @@ public class User implements Serializable {
     List<String> groups = new ArrayList<>();
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    List<Task> tasks = new ArrayList<>();
+    List<Projekt> tasks = new ArrayList<>();
 
     //<editor-fold defaultstate="collapsed" desc="Konstruktoren">
     public User() {
@@ -88,11 +88,11 @@ public class User implements Serializable {
         this.username = id;
     }
 
-    public List<Task> getTasks() {
+    public List<Projekt> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(List<Projekt> tasks) {
         this.tasks = tasks;
     }
     //</editor-fold>

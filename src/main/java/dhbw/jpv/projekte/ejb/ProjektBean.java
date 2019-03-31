@@ -7,12 +7,12 @@
  * Dieser Quellcode ist lizenziert unter einer
  * Creative Commons Namensnennung 4.0 International Lizenz.
  */
-package dhbw.jpv.tasks.ejb;
+package dhbw.jpv.projekte.ejb;
 
 import dhbw.jpv.common.ejb.EntityBean;
-import dhbw.jpv.tasks.jpa.Category;
-import dhbw.jpv.tasks.jpa.Task;
-import dhbw.jpv.tasks.jpa.TaskStatus;
+import dhbw.jpv.projekte.jpa.Abteilung;
+import dhbw.jpv.projekte.jpa.Projekt;
+import dhbw.jpv.projekte.jpa.ProjektStatus;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
@@ -26,10 +26,10 @@ import javax.persistence.criteria.Root;
  */
 @Stateless
 @RolesAllowed("app-user")
-public class TaskBean extends EntityBean<Task, Long> { 
+public class ProjektBean extends EntityBean<Projekt, Long> { 
    
-    public TaskBean() {
-        super(Task.class);
+    public ProjektBean() {
+        super(Projekt.class);
     }
     
     /**
@@ -37,8 +37,8 @@ public class TaskBean extends EntityBean<Task, Long> {
      * @param username Benutzername
      * @return Alle Aufgaben des Benutzers
      */
-    public List<Task> findByUsername(String username) {
-        return em.createQuery("SELECT t FROM Task t WHERE t.owner.username = :username ORDER BY t.dueDate, t.dueTime")
+    public List<Projekt> findByUsername(String username) {
+        return em.createQuery("SELECT t FROM Projekt t WHERE t.owner.username = :username ORDER BY t.dueDate, t.dueTime")
                  .setParameter("username", username)
                  .getResultList();
     }
@@ -50,17 +50,17 @@ public class TaskBean extends EntityBean<Task, Long> {
      * mit der CriteriaBuilder-API vollkommen dynamisch erzeugt.
      * 
      * @param search In der Kurzbeschreibung enthaltener Text (optional)
-     * @param category Kategorie (optional)
+     * @param abteilung Kategorie (optional)
      * @param status Status (optional)
      * @return Liste mit den gefundenen Aufgaben
      */
-    public List<Task> search(String search, Category category, TaskStatus status) {
+    public List<Projekt> search(String search, Abteilung abteilung, ProjektStatus status) {
         // Hilfsobjekt zum Bauen des Query
         CriteriaBuilder cb = this.em.getCriteriaBuilder();
         
-        // SELECT t FROM Task t
-        CriteriaQuery<Task> query = cb.createQuery(Task.class);
-        Root<Task> from = query.from(Task.class);
+        // SELECT t FROM Projekt t
+        CriteriaQuery<Projekt> query = cb.createQuery(Projekt.class);
+        Root<Projekt> from = query.from(Projekt.class);
         query.select(from);
 
         // ORDER BY dueDate, dueTime
@@ -74,9 +74,9 @@ public class TaskBean extends EntityBean<Task, Long> {
             query.where(p);
         }
         
-        // WHERE t.category = :category
-        if (category != null) {
-            p = cb.and(p, cb.equal(from.get("category"), category));
+        // WHERE t.abteilung = :abteilung
+        if (abteilung != null) {
+            p = cb.and(p, cb.equal(from.get("abteilung"), abteilung));
             query.where(p);
         }
         

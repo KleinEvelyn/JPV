@@ -7,10 +7,10 @@
  * Dieser Quellcode ist lizenziert unter einer
  * Creative Commons Namensnennung 4.0 International Lizenz.
  */
-package dhbw.jpv.tasks.ejb;
+package dhbw.jpv.projekte.ejb;
 
 import dhbw.jpv.common.ejb.EntityBean;
-import dhbw.jpv.tasks.jpa.Category;
+import dhbw.jpv.projekte.jpa.Abteilung;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
@@ -20,10 +20,10 @@ import javax.ejb.Stateless;
  */
 @Stateless
 @RolesAllowed("app-user")
-public class CategoryBean extends EntityBean<Category, Long> {
+public class AbteilungBean extends EntityBean<Abteilung, Long> {
 
-    public CategoryBean() {
-        super(Category.class);
+    public AbteilungBean() {
+        super(Abteilung.class);
     }
 
     /**
@@ -31,7 +31,7 @@ public class CategoryBean extends EntityBean<Category, Long> {
      *
      * @return Liste mit allen Kategorien
      */
-    public List<Category> findAllSorted() {
-        return this.em.createQuery("SELECT c FROM Category c ORDER BY c.name").getResultList();
+    public List<Abteilung> findAllSorted() {
+        return this.em.createQuery("SELECT c FROM Abteilung c ORDER BY c.name").getResultList();
     }
 }

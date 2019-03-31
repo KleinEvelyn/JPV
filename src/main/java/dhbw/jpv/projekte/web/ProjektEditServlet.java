@@ -7,16 +7,16 @@
  * Dieser Quellcode ist lizenziert unter einer
  * Creative Commons Namensnennung 4.0 International Lizenz.
  */
-package dhbw.jpv.tasks.web;
+package dhbw.jpv.projekte.web;
 
 import dhbw.jpv.common.web.WebUtils;
 import dhbw.jpv.common.web.FormValues;
-import dhbw.jpv.tasks.ejb.CategoryBean;
-import dhbw.jpv.tasks.ejb.TaskBean;
+import dhbw.jpv.projekte.ejb.AbteilungBean;
+import dhbw.jpv.projekte.ejb.ProjektBean;
 import dhbw.jpv.common.ejb.UserBean;
 import dhbw.jpv.common.ejb.ValidationBean;
-import dhbw.jpv.tasks.jpa.Task;
-import dhbw.jpv.tasks.jpa.TaskStatus;
+import dhbw.jpv.projekte.jpa.Projekt;
+import dhbw.jpv.projekte.jpa.ProjektStatus;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
@@ -36,13 +36,13 @@ import javax.servlet.http.HttpSession;
  * Seite zum Anlegen oder Bearbeiten einer Aufgabe.
  */
 @WebServlet(urlPatterns = "/app/tasks/task/*")
-public class TaskEditServlet extends HttpServlet {
+public class ProjektEditServlet extends HttpServlet {
 
     @EJB
-    TaskBean taskBean;
+    ProjektBean taskBean;
 
     @EJB
-    CategoryBean categoryBean;
+    AbteilungBean abteilungBean;
 
     @EJB
     UserBean userBean;
@@ -55,13 +55,13 @@ public class TaskEditServlet extends HttpServlet {
             throws ServletException, IOException {
 
         // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
-        request.setAttribute("categories", this.categoryBean.findAllSorted());
-        request.setAttribute("statuses", TaskStatus.values());
+        request.setAttribute("categories", this.abteilungBean.findAllSorted());
+        request.setAttribute("statuses", ProjektStatus.values());
 
         // Zu bearbeitende Aufgabe einlesen
         HttpSession session = request.getSession();
 
-        Task task = this.getRequestedTask(request);
+        Projekt task = this.getRequestedTask(request);
         request.setAttribute("edit", task.getId() != 0);
                                 
         if (session.getAttribute("task_form") == null) {
@@ -111,18 +111,18 @@ public class TaskEditServlet extends HttpServlet {
         // Formulareingaben prüfen
         List<String> errors = new ArrayList<>();
 
-        String taskCategory = request.getParameter("task_category");
+        String projektAbteilung = request.getParameter("projekt_abteilung");
         String taskDueDate = request.getParameter("task_due_date");
         String taskDueTime = request.getParameter("task_due_time");
         String taskStatus = request.getParameter("task_status");
         String taskShortText = request.getParameter("task_short_text");
         String taskLongText = request.getParameter("task_long_text");
 
-        Task task = this.getRequestedTask(request);
+        Projekt task = this.getRequestedTask(request);
 
-        if (taskCategory != null && !taskCategory.trim().isEmpty()) {
+        if (projektAbteilung != null && !projektAbteilung.trim().isEmpty()) {
             try {
-                task.setCategory(this.categoryBean.findById(Long.parseLong(taskCategory)));
+                task.setAbteilung(this.abteilungBean.findById(Long.parseLong(projektAbteilung)));
             } catch (NumberFormatException ex) {
                 // Ungültige oder keine ID mitgegeben
             }
@@ -144,7 +144,7 @@ public class TaskEditServlet extends HttpServlet {
         }
 
         try {
-            task.setStatus(TaskStatus.valueOf(taskStatus));
+            task.setStatus(ProjektStatus.valueOf(taskStatus));
         } catch (IllegalArgumentException ex) {
             errors.add("Der ausgewählte Status ist nicht vorhanden.");
         }
@@ -188,7 +188,7 @@ public class TaskEditServlet extends HttpServlet {
             throws ServletException, IOException {
 
         // Datensatz löschen
-        Task task = this.getRequestedTask(request);
+        Projekt task = this.getRequestedTask(request);
         this.taskBean.delete(task);
 
         // Zurück zur Übersicht
@@ -203,9 +203,9 @@ public class TaskEditServlet extends HttpServlet {
      * @param request HTTP-Anfrage
      * @return Zu bearbeitende Aufgabe
      */
-    private Task getRequestedTask(HttpServletRequest request) {
+    private Projekt getRequestedTask(HttpServletRequest request) {
         // Zunächst davon ausgehen, dass ein neuer Satz angelegt werden soll
-        Task task = new Task();
+        Projekt task = new Projekt();
         task.setOwner(this.userBean.getCurrentUser());
         task.setDueDate(new Date(System.currentTimeMillis()));
         task.setDueTime(new Time(System.currentTimeMillis()));
@@ -243,16 +243,16 @@ public class TaskEditServlet extends HttpServlet {
      * @param task Die zu bearbeitende Aufgabe
      * @return Neues, gefülltes FormValues-Objekt
      */
-    private FormValues createTaskForm(Task task) {
+    private FormValues createTaskForm(Projekt task) {
         Map<String, String[]> values = new HashMap<>();
 
         values.put("task_owner", new String[]{
             task.getOwner().getUsername()
         });
 
-        if (task.getCategory() != null) {
-            values.put("task_category", new String[]{
-                "" + task.getCategory().getId()
+        if (task.getAbteilung() != null) {
+            values.put("projekt_abteilung", new String[]{
+                "" + task.getAbteilung().getId()
             });
         }
 
