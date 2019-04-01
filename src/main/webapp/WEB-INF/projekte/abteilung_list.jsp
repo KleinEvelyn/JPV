@@ -6,7 +6,7 @@
 
 <template:base>
     <jsp:attribute name="title">
-        Kategorien bearbeiten
+        Abteilungen bearbeiten
     </jsp:attribute>
 
     <jsp:attribute name="head">
@@ -19,7 +19,7 @@
         </div>
 
         <div class="menuitem">
-            <a href="<c:url value="/app/projekte/list/"/>">Liste</a>
+            <a href="<c:url value="/app/tasks/list/"/>">Liste</a>
         </div>
     </jsp:attribute>
 
@@ -30,7 +30,7 @@
 
             <%-- Feld zum Anlegen einer neuen Kategorie --%>
             <div class="column margin">
-                <label for="j_username">Neue Kategorie:</label>
+                <label for="j_username">Neue Abteilung</label>
                 <input type="text" name="name" value="${abteilungen_form.values["name"][0]}">
 
                 <button type="submit" name="action" value="create" class="icon-pencil">
@@ -51,7 +51,7 @@
             <c:choose>
                 <c:when test="${empty abteilungen}">
                     <p>
-                        Es sind noch keine Kategorien vorhanden. 🐏
+                        Es sind noch keine Abteilungen vorhanden.
                     </p>
                 </c:when>
                 <c:otherwise>

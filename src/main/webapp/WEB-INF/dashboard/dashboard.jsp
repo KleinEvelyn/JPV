@@ -19,11 +19,11 @@
         </div>
 
         <div class="menuitem">
-            <a href="<c:url value="/app/tasks/task/new/"/>">Aufgabe anlegen</a>
+            <a href="<c:url value="/app/tasks/task/new/"/>">Projekt anlegen</a>
         </div>
 
         <div class="menuitem">
-            <a href="<c:url value="/app/tasks/categories/"/>">Kategorien bearbeiten</a>
+            <a href="<c:url value="/app/tasks/categories/"/>">Abteilungen bearbeiten</a>
         </div>
     </jsp:attribute>
 
@@ -31,7 +31,7 @@
         <c:choose>
             <c:when test="${empty sections}">
                 <p>
-                    Es wurden keine Dashboard-Kacheln gefunden. 🙈
+                    Es wurden keine Dashboard-Kacheln gefunden.
                 </p>
             </c:when>
             <c:otherwise>

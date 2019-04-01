@@ -8,10 +8,10 @@
     <jsp:attribute name="title">
         <c:choose>
             <c:when test="${edit}">
-                Aufgabe bearbeiten
+                Projekt bearbeiten
             </c:when>
             <c:otherwise>
-                Aufgabe anlegen
+                Projekt anlegen
             </c:otherwise>
         </c:choose>
     </jsp:attribute>
@@ -26,7 +26,7 @@
         </div>
         
         <div class="menuitem">
-            <a href="<c:url value="/app/projekte/list/"/>">Liste</a>
+            <a href="<c:url value="/app/tasks/list/"/>">Liste</a>
         </div>
     </jsp:attribute>
 
