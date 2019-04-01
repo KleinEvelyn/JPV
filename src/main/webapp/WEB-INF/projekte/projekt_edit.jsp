@@ -26,7 +26,7 @@
         </div>
         
         <div class="menuitem">
-            <a href="<c:url value="/app/tasks/list/"/>">Liste</a>
+            <a href="<c:url value="/app/tasks/list/"/>">Liste der Projekte</a>
         </div>
     </jsp:attribute>
 

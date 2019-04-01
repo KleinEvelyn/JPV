@@ -15,7 +15,7 @@
 
     <jsp:attribute name="menu">
         <div class="menuitem">
-            <a href="<c:url value="/app/tasks/list/"/>">Liste</a>
+            <a href="<c:url value="/app/tasks/list/"/>">Liste der Projekte</a>
         </div>
 
         <div class="menuitem">
@@ -38,9 +38,9 @@
                 <jsp:useBean id="utils" class="dhbw.jpv.common.web.WebUtils"/>
 
                 <c:forEach items="${sections}" var="section">
-                    <h2>
+                    <div id="dashHeadline">
                         <c:out value="${section.label}"/>
-                    </h2>
+                    </div>
 
                     <c:forEach items="${section.tiles}" var="tile">
                         <div class="tile ${tile.cssClass}">

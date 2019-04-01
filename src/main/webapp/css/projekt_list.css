@@ -8,3 +8,26 @@ td, th {
     text-align: left;
     vertical-align: baseline;
 }
+
+.container{
+    max-width: 58em;
+    background-color: rgba(0, 0, 0, 0.75); 
+    color: white;
+    margin: 45px auto;
+    padding: 2em;
+}
+
+.filters{
+    margin-right: 30px;
+    display: flex;
+}
+
+#searchBtn{
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 0px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}

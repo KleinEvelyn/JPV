@@ -29,7 +29,7 @@
             <%-- Titelzeile --%>
             <div id="titlebar">
                 <div class="appname">
-                    <image src="../../img/logo.png" alt="Logo" height="61">Projektmanager: 
+                    <image src="<c:url value="/img/logo.png"/>" alt="Logo" height="61">Projektmanager: 
                 </div>
                 <div class="content">
                     ${title}

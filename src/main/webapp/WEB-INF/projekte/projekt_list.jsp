@@ -28,79 +28,83 @@
     </jsp:attribute>
 
     <jsp:attribute name="content">
-        <%-- Suchfilter --%>
-        <form method="GET" class="horizontal" id="search">
-            <input type="text" name="search_text" value="${param.search_text}" placeholder="Beschreibung"/>
+        <div class="container">
+            <%-- Suchfilter --%>
+            <form method="GET" class="horizontal" id="search">
+                <div class="filters">
+                    <input type="text" name="search_text" value="${param.search_text}" placeholder="Beschreibung"/>
 
-            <select name="search_abteilung">
-                <option value="">Alle Abteilungen</option>
+                    <select name="search_abteilung">
+                        <option value="">Alle Abteilungen</option>
 
-                <c:forEach items="${abteilungen}" var="abteilung">
-                    <option value="${abteilung.id}" ${param.search_abteilung == abteilung.id ? 'selected' : ''}>
-                        <c:out value="${abteilung.name}" />
-                    </option>
-                </c:forEach>
-            </select>
+                        <c:forEach items="${abteilungen}" var="abteilung">
+                            <option value="${abteilung.id}" ${param.search_abteilung == abteilung.id ? 'selected' : ''}>
+                                <c:out value="${abteilung.name}" />
+                            </option>
+                        </c:forEach>
+                    </select>
 
-            <select name="search_status">
-                <option value="">Alle Stati</option>
+                    <select name="search_status">
+                        <option value="">Alle Stati</option>
 
-                <c:forEach items="${statuses}" var="status">
-                    <option value="${status}" ${param.search_status == status ? 'selected' : ''}>
-                        <c:out value="${status.label}"/>
-                    </option>
-                </c:forEach>
-            </select>
+                        <c:forEach items="${statuses}" var="status">
+                            <option value="${status}" ${param.search_status == status ? 'selected' : ''}>
+                                <c:out value="${status.label}"/>
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
+                    
+                <button id="searchBtn" type="submit">
+                    Suchen
+                </button>
+            </form>
 
-            <button class="icon-search" type="submit">
-                Suchen
-            </button>
-        </form>
+            <%-- Gefundene Projekte --%>
+            <c:choose>
+                <c:when test="${empty projekte}">
+                    <p>
+                        Es wurden keine Projekte gefunden.
+                    </p>
+                </c:when>
+                <c:otherwise>
+                    <jsp:useBean id="utils" class="dhbw.jpv.common.web.WebUtils"/>
 
-        <%-- Gefundene Projekte --%>
-        <c:choose>
-            <c:when test="${empty projekte}">
-                <p>
-                    Es wurden keine Projekte gefunden.
-                </p>
-            </c:when>
-            <c:otherwise>
-                <jsp:useBean id="utils" class="dhbw.jpv.common.web.WebUtils"/>
-                
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Bezeichnung</th>
-                            <th>Abteilung</th>
-                            <th>Eigentümer</th>
-                            <th>Status</th>
-                            <th>Fällig am</th>
-                        </tr>
-                    </thead>
-                    <c:forEach items="${projekte}" var="projekt">
-                        <tr>
-                            <td>
-                                <a href="<c:url value="/app/projekte/projekt/${projekt.id}/"/>">
-                                    <c:out value="${projekt.shortText}"/>
-                                </a>
-                            </td>
-                            <td>
-                                <c:out value="${projekt.abteilung.name}"/>
-                            </td>
-                            <td>
-                                <c:out value="${projekt.owner.username}"/>
-                            </td>
-                            <td>
-                                <c:out value="${projekt.status.label}"/>
-                            </td>
-                            <td>
-                                <c:out value="${utils.formatDate(projekt.dueDate)}"/>
-                                <c:out value="${utils.formatTime(projekt.dueTime)}"/>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </c:otherwise>
-        </c:choose>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Bezeichnung</th>
+                                <th>Abteilung</th>
+                                <th>Eigentümer</th>
+                                <th>Status</th>
+                                <th>Fällig am</th>
+                            </tr>
+                        </thead>
+                        <c:forEach items="${projekte}" var="projekt">
+                            <tr>
+                                <td>
+                                    <a href="<c:url value="/app/projekte/projekt/${projekt.id}/"/>">
+                                        <c:out value="${projekt.shortText}"/>
+                                    </a>
+                                </td>
+                                <td>
+                                    <c:out value="${projekt.abteilung.name}"/>
+                                </td>
+                                <td>
+                                    <c:out value="${projekt.owner.username}"/>
+                                </td>
+                                <td>
+                                    <c:out value="${projekt.status.label}"/>
+                                </td>
+                                <td>
+                                    <c:out value="${utils.formatDate(projekt.dueDate)}"/>
+                                    <c:out value="${utils.formatTime(projekt.dueTime)}"/>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </c:otherwise>
+            </c:choose>
+        </div>     
     </jsp:attribute>
 </template:base>
