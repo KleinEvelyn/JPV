@@ -5,6 +5,10 @@
 /* Jede Spalte max. 30em breit */
 form.stacked .column {
     max-width: 30em;
+    background-color: rgba(0, 0, 0, 0.75); 
+    color: white;
+    margin: 75px auto;
+    padding: 2em;
 }
 
 /* Formularelemente maximal breit gestapelt */

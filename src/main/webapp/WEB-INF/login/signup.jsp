@@ -52,23 +52,23 @@
                     <div class="side-by-side">
                         <input type="password" name="signup_password2" value="${signup_form.values["signup_password2"][0]}">
                     </div>
-
+                    
+                    <%-- Fehlermeldungen --%>
+                    <c:if test="${!empty signup_form.errors}">
+                        <ul class="errors">
+                            <c:forEach items="${signup_form.errors}" var="error">
+                                <li>${error}</li>
+                                </c:forEach>
+                        </ul>
+                    </c:if>
+                
                     <%-- Button zum Abschicken --%>
                     <div class="side-by-side">
-                        <button class="icon-pencil" type="submit">
+                        <button type="submit">
                             Registrieren
                         </button>
                     </div>
-                </div>
-
-                <%-- Fehlermeldungen --%>
-                <c:if test="${!empty signup_form.errors}">
-                    <ul class="errors">
-                        <c:forEach items="${signup_form.errors}" var="error">
-                            <li>${error}</li>
-                            </c:forEach>
-                    </ul>
-                </c:if>
+                </div>              
             </form>
         </div>
     </jsp:attribute>

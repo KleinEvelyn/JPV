@@ -21,7 +21,7 @@
 
     <jsp:attribute name="content">
         <p>
-            Das hat leider nicht geklappt. 🐻
+            Der Login war leider nicht erfolgreich.
         </p>
     </jsp:attribute>
 </template:base>

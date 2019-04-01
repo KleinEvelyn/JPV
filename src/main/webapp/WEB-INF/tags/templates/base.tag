@@ -1,12 +1,3 @@
-<%-- 
-    Copyright © 2018 Dennis Schulmeister-Zimolong
-
-    E-Mail: dhbw@windows3.de
-    Webseite: https://www.wpvs.de/
-
-    Dieser Quellcode ist lizenziert unter einer
-    Creative Commons Namensnennung 4.0 International Lizenz.
---%>
 <%@tag pageEncoding="UTF-8"%>
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -22,9 +13,8 @@
     <head>
         <meta charset="utf-8" />
 
-        <title>Aufgabenliste - ${title}</title>
-        
-        <!-- https://pixabay.com/de/flach-design-symbol-icon-www-2126884/ -->
+        <title>Projektmanager: ${title}</title>
+
         <link rel="shortcut icon" href="<c:url value="/img/favicon.png"/>">
 
         <link rel="stylesheet" href="<c:url value="/fontello/css/fontello.css"/>" />
@@ -39,7 +29,7 @@
             <%-- Titelzeile --%>
             <div id="titlebar">
                 <div class="appname">
-                    Aufgabenliste - 
+                    <image src="../../img/logo.png" alt="Logo" height="61">Projektmanager: 
                 </div>
                 <div class="content">
                     ${title}
