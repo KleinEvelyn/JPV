@@ -73,6 +73,6 @@ public class ProjektListServlet extends HttpServlet {
         request.setAttribute("tasks", tasks);
 
         // Anfrage an die JSP weiterleiten
-        request.getRequestDispatcher("/WEB-INF/tasks/task_list.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/projekte/projekt_list.jsp").forward(request, response);
     }
 }

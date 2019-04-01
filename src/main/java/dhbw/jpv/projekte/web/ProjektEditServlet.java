@@ -1,12 +1,3 @@
-/*
- * Copyright © 2018 Dennis Schulmeister-Zimolong
- * 
- * E-Mail: dhbw@windows3.de
- * Webseite: https://www.wpvs.de/
- * 
- * Dieser Quellcode ist lizenziert unter einer
- * Creative Commons Namensnennung 4.0 International Lizenz.
- */
 package dhbw.jpv.projekte.web;
 
 import dhbw.jpv.common.web.WebUtils;
@@ -71,7 +62,7 @@ public class ProjektEditServlet extends HttpServlet {
         }
 
         // Anfrage an die JSP weiterleiten
-        request.getRequestDispatcher("/WEB-INF/tasks/task_edit.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/projekte/projekt_edit.jsp").forward(request, response);
         
         session.removeAttribute("task_form");
     }
