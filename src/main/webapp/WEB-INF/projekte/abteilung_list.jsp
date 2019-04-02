@@ -19,7 +19,7 @@
         </div>
 
         <div class="menuitem">
-            <a href="<c:url value="/app/tasks/list/"/>">Liste der Projekte</a>
+            <a href="<c:url value="/app/projekte/list/"/>">Liste der Projekte</a>
         </div>
     </jsp:attribute>
 
@@ -28,7 +28,7 @@
             <%-- CSRF-Token --%>
             <input type="hidden" name="csrf_token" value="${csrf_token}">
 
-            <%-- Feld zum Anlegen einer neuen Kategorie --%>
+            <%-- Feld zum Anlegen einer neuen Abteilung --%>
             <div class="column margin">
                 <h2>Abteilung anlegen und bearbeiten</h2>
                 <label for="j_username">Name</label>
@@ -40,10 +40,6 @@
                 <label for="j_username">Beschreibung</label>
                 <input type="text" name="beschreibung" value="${abteilungen_form.values["beschreibung"][0]}">
 
-                <button type="submit" name="action" value="create">
-                    Anlegen
-                </button>
-
                 <%-- Fehlermeldungen --%>
                 <c:if test="${!empty abteilungen_form.errors}">
                     <ul class="errors margin">
@@ -52,6 +48,10 @@
                             </c:forEach>
                     </ul>
                 </c:if>
+
+                <button type="submit" name="action" value="create">
+                    Anlegen
+                </button>
 
                 <%-- Vorhandene Kategorien --%>
                 <c:choose>
@@ -66,13 +66,17 @@
                                 <c:forEach items="${abteilungen}" var="abteilung">
                                     <input type="checkbox" name="abteilung" id="${'abteilung-'.concat(abteilung.id)}" value="${abteilung.id}" />
                                     <label for="${'abteilung-'.concat(abteilung.id)}">
-                                        <c:out value="${abteilung.name}"/>
+                                        <c:out value="${abteilung.kuerzel}"/>
                                     </label>
                                     <br />
+                                    ${abteilung.name}
+                                    <br />
+                                    ${abteilung.beschreibung}
+                                    <hr>
                                 </c:forEach>
                             </div>
 
-                            <button type="submit" name="action" value="delete" class="icon-trash">
+                            <button type="submit" name="action" value="delete">
                                 Markierte löschen
                             </button>
                         </div>

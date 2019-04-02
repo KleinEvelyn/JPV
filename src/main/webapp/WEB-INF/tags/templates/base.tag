@@ -20,7 +20,8 @@
         <link rel="stylesheet" href="<c:url value="/fontello/css/fontello.css"/>" />
         <link rel="stylesheet" href="<c:url value="/css/main.css"/>" />
         <link rel="stylesheet" href="<c:url value="/css/form.css"/>" />
-
+        
+        
         <jsp:invoke fragment="head"/>
     </head>
     <body>

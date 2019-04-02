@@ -26,21 +26,21 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet für die tabellarische Auflisten der Aufgaben.
  */
-@WebServlet(urlPatterns = {"/app/tasks/list/"})
+@WebServlet(urlPatterns = {"/app/projekte/list/"})
 public class ProjektListServlet extends HttpServlet {
 
     @EJB
     private AbteilungBean categoryBean;
     
     @EJB
-    private ProjektBean taskBean;
+    private ProjektBean projektBean;
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
-        request.setAttribute("categories", this.categoryBean.findAllSorted());
+        request.setAttribute("abteilungen", this.categoryBean.findAllSorted());
         request.setAttribute("statuses", ProjektStatus.values());
 
         // Suchparameter aus der URL auslesen
@@ -69,8 +69,8 @@ public class ProjektListServlet extends HttpServlet {
 
         }
 
-        List<Projekt> tasks = this.taskBean.search(searchText, category, status);
-        request.setAttribute("tasks", tasks);
+        List<Projekt> projekte = this.projektBean.search(searchText, category, status);
+        request.setAttribute("projekte", projekte);
 
         // Anfrage an die JSP weiterleiten
         request.getRequestDispatcher("/WEB-INF/projekte/projekt_list.jsp").forward(request, response);

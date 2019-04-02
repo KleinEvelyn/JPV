@@ -31,7 +31,7 @@ import javax.servlet.http.HttpSession;
  * Formular, mit dem ein neue Kategorie angelegt werden kann, sowie eine Liste,
  * die zum Löschen der Kategorien verwendet werden kann.
  */
-@WebServlet(urlPatterns = {"/app/tasks/categories/"})
+@WebServlet(urlPatterns = {"/app/projekte/abteilungen/"})
 public class AbteilungListServlet extends HttpServlet {
 
     @EJB
@@ -128,16 +128,16 @@ public class AbteilungListServlet extends HttpServlet {
     private void deleteAbteilungen(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Markierte Kategorie IDs auslesen
+        // Markierte Abteilungs IDs auslesen
         String[] projektIds = request.getParameterValues("projekt");
 
         if (projektIds == null) {
             projektIds = new String[0];
         }
 
-        // Kategorien löschen
+        // Abteilungen löschen
         for (String projektId : projektIds) {
-            // Zu löschende Kategorie ermitteln
+            // Zu löschende Abteilung ermitteln
             Abteilung abteilung;
 
             try {
@@ -150,7 +150,7 @@ public class AbteilungListServlet extends HttpServlet {
                 continue;
             }
 
-            // Bei allen betroffenen Aufgaben, den Bezug zur Kategorie aufheben
+            // Bei allen betroffenen Projekten, den Bezug zur Abteilung aufheben
             List<Projekt> projekte = abteilung.getProjekte();
 
             if (projekte != null) {

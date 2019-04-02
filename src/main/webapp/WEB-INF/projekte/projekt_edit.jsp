@@ -26,7 +26,7 @@
         </div>
         
         <div class="menuitem">
-            <a href="<c:url value="/app/tasks/list/"/>">Liste der Projekte</a>
+            <a href="<c:url value="/app/projekte/list/"/>">Liste der Projekte</a>
         </div>
     </jsp:attribute>
 
@@ -39,17 +39,17 @@
                 <%-- Eingabefelder --%>
                 <label for="projekt_owner">Eigentümer:</label>
                 <div class="side-by-side">
-                    <input type="text" name="projekt_owner" value="${projekt_form.values["projekt_owner"][0]}" readonly="readonly">
+                    <input type="text" name="projekt_owner" value="${pageContext.request.userPrincipal.name}" readonly="readonly">
                 </div>
 
-                <label for="projekt_abteilung">Kategorie:</label>
+                <label for="projekt_abteilung">Abteilung:</label>
                 <div class="side-by-side">
                     <select name="projekt_abteilung">
-                        <option value="">Keine Kategorie</option>
+                        <option value="">Keine Abteilung</option>
 
                         <c:forEach items="${abteilungen}" var="abteilung">
                             <option value="${abteilung.id}" ${projekt_form.values["projekt_abteilung"][0] == abteilung.id.toString() ? 'selected' : ''}>
-                                <c:out value="${abteilung.name}" />
+                                <c:out value="${abteilung.kuerzel}" />
                             </option>
                         </c:forEach>
                     </select>

@@ -26,11 +26,11 @@ import javax.servlet.http.HttpSession;
 /**
  * Seite zum Anlegen oder Bearbeiten einer Aufgabe.
  */
-@WebServlet(urlPatterns = "/app/tasks/task/*")
+@WebServlet(urlPatterns = "/app/projekte/projekt/*")
 public class ProjektEditServlet extends HttpServlet {
 
     @EJB
-    ProjektBean taskBean;
+    ProjektBean projektBean;
 
     @EJB
     AbteilungBean abteilungBean;
@@ -46,25 +46,25 @@ public class ProjektEditServlet extends HttpServlet {
             throws ServletException, IOException {
 
         // Verfügbare Kategorien und Stati für die Suchfelder ermitteln
-        request.setAttribute("categories", this.abteilungBean.findAllSorted());
+        request.setAttribute("abteilungen", this.abteilungBean.findAllSorted());
         request.setAttribute("statuses", ProjektStatus.values());
 
         // Zu bearbeitende Aufgabe einlesen
         HttpSession session = request.getSession();
 
-        Projekt task = this.getRequestedTask(request);
-        request.setAttribute("edit", task.getId() != 0);
+        Projekt projekt = this.getRequestedProjekt(request);
+        request.setAttribute("edit", projekt.getId() != 0);
                                 
-        if (session.getAttribute("task_form") == null) {
+        if (session.getAttribute("abteilung_form") == null) {
             // Keine Formulardaten mit fehlerhaften Daten in der Session,
             // daher Formulardaten aus dem Datenbankobjekt übernehmen
-            request.setAttribute("task_form", this.createTaskForm(task));
+            request.setAttribute("abteilung_form", this.createProjektForm(projekt));
         }
 
         // Anfrage an die JSP weiterleiten
         request.getRequestDispatcher("/WEB-INF/projekte/projekt_edit.jsp").forward(request, response);
         
-        session.removeAttribute("task_form");
+        session.removeAttribute("abteilung_form");
     }
 
     @Override
@@ -80,10 +80,10 @@ public class ProjektEditServlet extends HttpServlet {
 
         switch (action) {
             case "save":
-                this.saveTask(request, response);
+                this.saveProjekt(request, response);
                 break;
             case "delete":
-                this.deleteTask(request, response);
+                this.deleteProjekt(request, response);
                 break;
         }
     }
@@ -96,64 +96,64 @@ public class ProjektEditServlet extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
-    private void saveTask(HttpServletRequest request, HttpServletResponse response)
+    private void saveProjekt(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         // Formulareingaben prüfen
         List<String> errors = new ArrayList<>();
 
         String projektAbteilung = request.getParameter("projekt_abteilung");
-        String taskDueDate = request.getParameter("task_due_date");
-        String taskDueTime = request.getParameter("task_due_time");
-        String taskStatus = request.getParameter("task_status");
-        String taskShortText = request.getParameter("task_short_text");
-        String taskLongText = request.getParameter("task_long_text");
+        String projektDueDate = request.getParameter("projekt_due_date");
+        String projektDueTime = request.getParameter("projekt_due_time");
+        String projektStatus = request.getParameter("projekt_status");
+        String projektShortText = request.getParameter("projekt_short_text");
+        String projektLongText = request.getParameter("projekt_long_text");
 
-        Projekt task = this.getRequestedTask(request);
+        Projekt projekt = this.getRequestedProjekt(request);
 
         if (projektAbteilung != null && !projektAbteilung.trim().isEmpty()) {
             try {
-                task.setAbteilung(this.abteilungBean.findById(Long.parseLong(projektAbteilung)));
+                projekt.setAbteilung(this.abteilungBean.findById(Long.parseLong(projektAbteilung)));
             } catch (NumberFormatException ex) {
                 // Ungültige oder keine ID mitgegeben
             }
         }
 
-        Date dueDate = WebUtils.parseDate(taskDueDate);
-        Time dueTime = WebUtils.parseTime(taskDueTime);
+        Date dueDate = WebUtils.parseDate(projektDueDate);
+        Time dueTime = WebUtils.parseTime(projektDueTime);
 
         if (dueDate != null) {
-            task.setDueDate(dueDate);
+            projekt.setDueDate(dueDate);
         } else {
             errors.add("Das Datum muss dem Format dd.mm.yyyy entsprechen.");
         }
 
         if (dueTime != null) {
-            task.setDueTime(dueTime);
+            projekt.setDueTime(dueTime);
         } else {
             errors.add("Die Uhrzeit muss dem Format hh:mm:ss entsprechen.");
         }
 
         try {
-            task.setStatus(ProjektStatus.valueOf(taskStatus));
+            projekt.setStatus(ProjektStatus.valueOf(projektStatus));
         } catch (IllegalArgumentException ex) {
             errors.add("Der ausgewählte Status ist nicht vorhanden.");
         }
 
-        task.setShortText(taskShortText);
-        task.setLongText(taskLongText);
+        projekt.setShortText(projektShortText);
+        projekt.setLongText(projektLongText);
 
-        this.validationBean.validate(task, errors);
+        this.validationBean.validate(projekt, errors);
 
         // Datensatz speichern
         if (errors.isEmpty()) {
-            this.taskBean.update(task);
+            this.projektBean.update(projekt);
         }
 
         // Weiter zur nächsten Seite
         if (errors.isEmpty()) {
             // Keine Fehler: Startseite aufrufen
-            response.sendRedirect(WebUtils.appUrl(request, "/app/tasks/list/"));
+            response.sendRedirect(WebUtils.appUrl(request, "/app/projekte/list/"));
         } else {
             // Fehler: Formuler erneut anzeigen
             FormValues formValues = new FormValues();
@@ -161,7 +161,7 @@ public class ProjektEditServlet extends HttpServlet {
             formValues.setErrors(errors);
 
             HttpSession session = request.getSession();
-            session.setAttribute("task_form", formValues);
+            session.setAttribute("projekt_form", formValues);
 
             response.sendRedirect(request.getRequestURI());
         }
@@ -175,15 +175,15 @@ public class ProjektEditServlet extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
-    private void deleteTask(HttpServletRequest request, HttpServletResponse response)
+    private void deleteProjekt(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         // Datensatz löschen
-        Projekt task = this.getRequestedTask(request);
-        this.taskBean.delete(task);
+        Projekt projekt = this.getRequestedProjekt(request);
+        this.projektBean.delete(projekt);
 
         // Zurück zur Übersicht
-        response.sendRedirect(WebUtils.appUrl(request, "/app/tasks/list/"));
+        response.sendRedirect(WebUtils.appUrl(request, "/app/projekte/list/"));
     }
 
     /**
@@ -194,34 +194,34 @@ public class ProjektEditServlet extends HttpServlet {
      * @param request HTTP-Anfrage
      * @return Zu bearbeitende Aufgabe
      */
-    private Projekt getRequestedTask(HttpServletRequest request) {
+    private Projekt getRequestedProjekt(HttpServletRequest request) {
         // Zunächst davon ausgehen, dass ein neuer Satz angelegt werden soll
-        Projekt task = new Projekt();
-        task.setOwner(this.userBean.getCurrentUser());
-        task.setDueDate(new Date(System.currentTimeMillis()));
-        task.setDueTime(new Time(System.currentTimeMillis()));
+        Projekt projekt = new Projekt();
+        projekt.setOwner(this.userBean.getCurrentUser());
+        projekt.setDueDate(new Date(System.currentTimeMillis()));
+        projekt.setDueTime(new Time(System.currentTimeMillis()));
 
         // ID aus der URL herausschneiden
-        String taskId = request.getPathInfo();
+        String projektId = request.getPathInfo();
 
-        if (taskId == null) {
-            taskId = "";
+        if (projektId == null) {
+            projektId = "";
         }
 
-        taskId = taskId.substring(1);
+        projektId = projektId.substring(1);
 
-        if (taskId.endsWith("/")) {
-            taskId = taskId.substring(0, taskId.length() - 1);
+        if (projektId.endsWith("/")) {
+            projektId = projektId.substring(0, projektId.length() - 1);
         }
 
         // Versuchen, den Datensatz mit der übergebenen ID zu finden
         try {
-            task = this.taskBean.findById(Long.parseLong(taskId));
+            projekt = this.projektBean.findById(Long.parseLong(projektId));
         } catch (NumberFormatException ex) {
             // Ungültige oder keine ID in der URL enthalten
         }
 
-        return task;
+        return projekt;
     }
 
     /**
@@ -231,40 +231,40 @@ public class ProjektEditServlet extends HttpServlet {
      * Formular aus der Entity oder aus einer vorherigen Formulareingabe
      * stammen.
      *
-     * @param task Die zu bearbeitende Aufgabe
+     * @param projekt Die zu bearbeitende Aufgabe
      * @return Neues, gefülltes FormValues-Objekt
      */
-    private FormValues createTaskForm(Projekt task) {
+    private FormValues createProjektForm(Projekt projekt) {
         Map<String, String[]> values = new HashMap<>();
 
-        values.put("task_owner", new String[]{
-            task.getOwner().getUsername()
+        values.put("projekt_owner", new String[]{
+            projekt.getOwner().getUsername()
         });
 
-        if (task.getAbteilung() != null) {
+        if (projekt.getAbteilung() != null) {
             values.put("projekt_abteilung", new String[]{
-                "" + task.getAbteilung().getId()
+                "" + projekt.getAbteilung().getId()
             });
         }
 
-        values.put("task_due_date", new String[]{
-            WebUtils.formatDate(task.getDueDate())
+        values.put("projekt_due_date", new String[]{
+            WebUtils.formatDate(projekt.getDueDate())
         });
 
-        values.put("task_due_time", new String[]{
-            WebUtils.formatTime(task.getDueTime())
+        values.put("projekt_due_time", new String[]{
+            WebUtils.formatTime(projekt.getDueTime())
         });
 
-        values.put("task_status", new String[]{
-            task.getStatus().toString()
+        values.put("projekt_status", new String[]{
+            projekt.getStatus().toString()
         });
 
-        values.put("task_short_text", new String[]{
-            task.getShortText()
+        values.put("projekt_short_text", new String[]{
+            projekt.getShortText()
         });
 
-        values.put("task_long_text", new String[]{
-            task.getLongText()
+        values.put("projekt_long_text", new String[]{
+            projekt.getLongText()
         });
 
         FormValues formValues = new FormValues();
