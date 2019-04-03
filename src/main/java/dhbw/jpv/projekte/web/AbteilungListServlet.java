@@ -129,19 +129,18 @@ public class AbteilungListServlet extends HttpServlet {
             throws ServletException, IOException {
 
         // Markierte Abteilungs IDs auslesen
-        String[] projektIds = request.getParameterValues("projekt");
-
-        if (projektIds == null) {
-            projektIds = new String[0];
+        String[] abteilungIds = request.getParameterValues("abteilung");
+        if (abteilungIds == null) {
+            abteilungIds = new String[0];
         }
 
         // Abteilungen löschen
-        for (String projektId : projektIds) {
+        for (String abteilungId : abteilungIds) {
             // Zu löschende Abteilung ermitteln
             Abteilung abteilung;
 
             try {
-                abteilung = this.abteilungBean.findById(Long.parseLong(projektId));
+                abteilung = this.abteilungBean.findById(Long.parseLong(abteilungId));
             } catch (NumberFormatException ex) {
                 continue;
             }

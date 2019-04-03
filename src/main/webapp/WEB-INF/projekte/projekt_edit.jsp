@@ -96,7 +96,7 @@
                 <%-- Button zum Abschicken --%>
                 <div class="side-by-side">
                     <button class="icon-pencil" type="submit" name="action" value="save">
-                        Sichern
+                        Speichern
                     </button>
 
                     <c:if test="${edit}">

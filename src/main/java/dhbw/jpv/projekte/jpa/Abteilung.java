@@ -105,8 +105,8 @@ public class Abteilung implements Serializable {
         return projekte;
     }
 
-    public void setProjekte(List<Projekt> tasks) {
-        this.projekte = tasks;
+    public void setProjekte(List<Projekt> projekte) {
+        this.projekte = projekte;
     }
     //</editor-fold>
 
