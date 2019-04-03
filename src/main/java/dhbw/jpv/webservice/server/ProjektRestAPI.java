@@ -21,7 +21,7 @@ public class ProjektRestAPI extends Application{
         Set<Class<?>> resources = new HashSet<>();
         
         resources.add(ProjektResource.class);
-        //resources.add(AbteilungResource.class);
+        resources.add(AbteilungResource.class);
         
         return resources;
     }
