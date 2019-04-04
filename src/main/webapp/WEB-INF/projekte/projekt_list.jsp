@@ -32,7 +32,7 @@
             <%-- Suchfilter --%>
             <form method="GET" class="horizontal" id="search">
                 <div class="filters">
-                    <input type="text" name="search_text" value="${param.search_text}" placeholder="Beschreibung"/>
+                    <input type="text" name="search_text" value="${param.search_text}" placeholder="Bezeichnung"/>
 
                     <select name="search_abteilung">
                         <option value="">Alle Abteilungen</option>

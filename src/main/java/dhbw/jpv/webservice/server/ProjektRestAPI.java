@@ -14,7 +14,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 
-@ApplicationPath("api")
+@ApplicationPath("app/api")
 public class ProjektRestAPI extends Application{
     @Override 
     public Set<Class<?>> getClasses(){

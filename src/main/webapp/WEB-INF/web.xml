@@ -62,7 +62,7 @@
     -->
     <security-role>
         <description>
-            Ein Benutzer der jTodo-Beispielanwendung. Jeder Benutzer muss
+            Ein Benutzer der JPV-Anwendung. Jeder Benutzer muss
             mindestens diese Rolle besitzen, um sich einloggen und neue
             Aufgaben anlegen zu können.
         </description>
@@ -75,7 +75,7 @@
     -->
     <login-config>
         <auth-method>FORM</auth-method>
-        <realm-name>todo-app</realm-name>
+        <realm-name>jpv-app</realm-name>
         
         <form-login-config>
             <form-login-page>/WEB-INF/login/login.jsp</form-login-page>

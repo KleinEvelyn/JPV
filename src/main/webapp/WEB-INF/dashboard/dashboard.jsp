@@ -25,6 +25,14 @@
         <div class="menuitem">
             <a href="<c:url value="/app/projekte/abteilungen/"/>">Abteilungen bearbeiten</a>
         </div>
+        
+        <div class="menuitem">
+            <a href="<c:url value="/app/userMgmt/"/>">Benutzer bearbeiten</a>
+        </div>
+        
+        <div class="menuitem">
+            <a href="<c:url value="/app/rest/"/>">REST Webservice</a>
+        </div>
     </jsp:attribute>
 
     <jsp:attribute name="content">
