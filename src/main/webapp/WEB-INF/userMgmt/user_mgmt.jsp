@@ -46,7 +46,6 @@
                     
                     <label for="update_vorname">
                         Vorname:
-                        <span class="required">*</span>
                     </label>
                     <div class="side-by-side">
                         <input type="text" name="update_vorname" value="${update_form.values["update_vorname"][0]}" placeholder="${vorname}">
@@ -54,7 +53,6 @@
                     
                     <label for="update_nachname">
                         Nachname:
-                        <span class="required">*</span>
                     </label>
                     <div class="side-by-side">
                         <input type="text" name="update_nachname" value="${update_form.values["update_nachname"][0]}" placeholder="${nachname}">

@@ -40,6 +40,6 @@ public class RestServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        /** TBD **/
+        // NOTHING 2 POST
     }
 }

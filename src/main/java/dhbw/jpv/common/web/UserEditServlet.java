@@ -52,6 +52,7 @@ public class UserEditServlet extends HttpServlet {
         
         // Eingaben prüfen
         User user = new User(username, vorname, nachname, oldPassword);
+        User newUser = new User(username, vorname, nachname, newPassword);
         List<String> errors = this.validationBean.validate(user);
         this.validationBean.validate(user.getPassword(), errors);
         
@@ -59,6 +60,7 @@ public class UserEditServlet extends HttpServlet {
         if (errors.isEmpty()) {
             try {
                 this.userBean.changePassword(user, oldPassword, newPassword);
+                //this.userBean.update(newUser);
             } catch (UserBean.InvalidCredentialsException ex) {
                 errors.add(ex.getMessage());
             }
