@@ -36,7 +36,10 @@ public class UserEditServlet extends HttpServlet {
         
         // Anfrage an dazugerhörige JSP weiterleiten
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/userMgmt/user_mgmt.jsp");
-        dispatcher.forward(request, response);       
+        dispatcher.forward(request, response);
+        
+        // Alte Fehlermeldung zurücksetzen
+        request.getSession().removeAttribute("update_form");
     }
     
     @Override
@@ -48,19 +51,24 @@ public class UserEditServlet extends HttpServlet {
         String vorname = request.getParameter("update_vorname");
         String nachname = request.getParameter("update_nachname");
         String oldPassword = request.getParameter("update_password1");
-        String newPassword = request.getParameter("update_password2");
+        String newPassword1 = request.getParameter("update_password2");
+        String newPassword2 = request.getParameter("update_password3");
         
         // Eingaben prüfen
-        User user = new User(username, vorname, nachname, oldPassword);
-        User newUser = new User(username, vorname, nachname, newPassword);
-        List<String> errors = this.validationBean.validate(user);
-        this.validationBean.validate(user.getPassword(), errors);
+        User tempUser = new User(username, vorname, nachname, oldPassword);
+        List<String> errors = this.validationBean.validate(tempUser);
+        //this.validationBean.validate(tempUser.getPassword(), errors);
+        
+        if (newPassword1 == null && newPassword2 == null && !newPassword1.equals(newPassword2)) {
+            errors.add("Die beiden neuen Passwörter stimmen nicht überein.");
+        }
         
         // Passwort aktualisieren
-        if (errors.isEmpty()) {
+        if (errors.isEmpty() && newPassword1 != null && !newPassword1.trim().isEmpty()) {
             try {
-                this.userBean.changePassword(user, oldPassword, newPassword);
-                //this.userBean.update(newUser);
+                User newUser = userBean.getCurrentUser();
+                this.userBean.changePassword(newUser, oldPassword, newPassword1.trim());
+                this.userBean.update(newUser);
             } catch (UserBean.InvalidCredentialsException ex) {
                 errors.add(ex.getMessage());
             }
@@ -69,6 +77,11 @@ public class UserEditServlet extends HttpServlet {
         // Redirect 
         if (errors.isEmpty()) {
             // Keine Fehler: Startseite aufrufen
+            User newUser = userBean.getCurrentUser();
+            newUser.setVorname(vorname);
+            newUser.setNachname(nachname);
+            this.userBean.update(newUser);
+            
             response.sendRedirect(WebUtils.appUrl(request, "/app/userMgmt/"));
         } else {
             // Fehler: Formuler erneut anzeigen

@@ -11,6 +11,8 @@
 
     <jsp:attribute name="head">
         <link rel="stylesheet" href="<c:url value="/css/dashboard.css"/>" />
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> 
+        <script type="text/javascript" src="<c:url value="piechart.js"/>"></script> 
     </jsp:attribute>
 
     <jsp:attribute name="menu">
@@ -38,6 +40,8 @@
                     
                     <%-- REST Webservice --%>
                     <h1>REST Webservice</h1>
+                    
+                    <div id="piechart"></div>
                 </div>              
             </form>
         </div>

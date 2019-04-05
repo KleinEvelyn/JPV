@@ -74,6 +74,14 @@
                         <input type="password" name="update_password2" value="${update_form.values["update_password2"][0]}">
                     </div>
                     
+                    <label for="update_password3">
+                        Neues Passwort (Wdh.):
+                        <span class="required">*</span>
+                    </label>
+                    <div class="side-by-side">
+                        <input type="password" name="update_password3" value="${update_form.values["update_password3"][0]}">
+                    </div>
+                    
                     <%-- Fehlermeldungen --%>
                     <c:if test="${!empty update_form.errors}">
                         <ul class="errors">
