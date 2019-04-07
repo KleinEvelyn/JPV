@@ -11,8 +11,6 @@
 
     <jsp:attribute name="head">
         <link rel="stylesheet" href="<c:url value="/css/dashboard.css"/>" />
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> 
-        <script type="text/javascript" src="<c:url value="/js/piechart.js"/>"></script> 
         <script type="text/javascript" src="<c:url value="/js/AbteilungResource.js"/>"></script> 
     </jsp:attribute>
 
@@ -41,16 +39,23 @@
                     
                     <%-- REST Webservice --%>
                     <h1>REST Webservice // Projekt-Overview</h1>
-                    <div id="piechart"></div>
-                    <div id="abteilungen"></div>
-                    <input id="search" type="text" />
-                    <button id="btn" type="button">Test</button>
+                    <textarea id="search" rows="1" placeholder="Suche nach Abteilungen"></textarea>
+                    <table >
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Kürzel</th>
+                                <th>Beschreibung</th>
+                            </tr>
+                        </thead>
+                        <tbody id="abteilungen"></tbody>
+                    </table>
                 </div>              
             </form>
         </div>
         <script>
             abteilungResource = new AbteilungResource();
-            let reloadAbteilungen = async () => {
+            let reloadAbteilungen = async (searchTerm) => {
                 let response = await abteilungResource.findAbteilungen(searchTerm);
 
                 if ("exception" in response) {
@@ -60,22 +65,23 @@
                     abteilungenElement.innerHTML = "";
 
                     response.forEach(abteilung => {
-                        let abteilungElement = document.createElement("div");
-                        abteilungElement.classList.add("abteilung");
+                        let abteilungElement = document.createElement("tr");
                         abteilungenElement.appendChild(abteilungElement);
-                        abteilungElement.innerHTML = '<b>'+abteilung.name+'</b> <br/>'
-                            + '<span class="label">Abteilung:</span>'+abteilung.name+'<br/>'
-                            + '<span class="label">Kürzel:</span>'+abteilung.kuerzel+'<br/>'
-                            + '<span class="label">Beschreibung:</span>'+abteilung.beschreibung+'<br/>';
+                        abteilungElement.innerHTML = '<td>'+abteilung.name+'</td>' 
+                                + '<td>'+abteilung.kuerzel+'</td>'
+                                + '<td>'+abteilung.beschreibung+'</td>';
+                    
                     });
                 }
             };
+            let inputField = document.getElementById("search");
+            inputField.onkeyup = () => {
+                let searchTerm = inputField.value;
+                console.log(searchTerm);
+                reloadAbteilungen(searchTerm);
+            }
             
-            window.addEventListener("load", () => reloadAbteilungen());
-            let btn = document.getElementById("btn");
-            let searchTerm = document.getElementById("search").value;
-
-            btn.addEventListener("click", () => reloadAbteilungen());
+            window.addEventListener("load", () => reloadAbteilungen(""));
         </script>
     </jsp:attribute>
 </template:base>

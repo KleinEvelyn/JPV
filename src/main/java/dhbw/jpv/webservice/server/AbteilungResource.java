@@ -43,7 +43,7 @@ public class AbteilungResource {
     }
     
     @GET
-    public List<Abteilung> searchEvents(@QueryParam("query") @DefaultValue("") String query) {
+    public List<Abteilung> searchAbteilungen(@QueryParam("query") @DefaultValue("") String query) {
         return this.abteilungBean.searchAbteilungen(query);
     }
 }
