@@ -41,6 +41,10 @@
                     <%-- REST Webservice --%>
                     <h1>REST Webservice</h1>
                     
+                    <div>
+                        <a href="<c:url value="/app/api/Abteilungen/">Alle Abteilungen anzeigen</c:url>"></a>
+                        <a href="<c:url value="/app/api/Abteilungen/">Alle Abteilungen anzeigen</c:url>"></a>
+                    </div>
                     <div id="piechart"></div>
                 </div>              
             </form>

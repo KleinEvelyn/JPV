@@ -31,11 +31,11 @@
             <%-- Feld zum Anlegen einer neuen Abteilung --%>
             <div class="column margin">
                 <h2>Abteilung anlegen und bearbeiten</h2>
-                <label for="j_username">Name</label>
-                <input type="text" name="name" value="${abteilungen_form.values["name"][0]}">
-                
                 <label for="j_username">Kürzel</label>
                 <input type="text" name="kuerzel" value="${abteilungen_form.values["kuerzel"][0]}">
+                
+                <label for="j_username">Name</label>
+                <input type="text" name="name" value="${abteilungen_form.values["name"][0]}">        
                 
                 <label for="j_username">Beschreibung</label>
                 <input type="text" name="beschreibung" value="${abteilungen_form.values["beschreibung"][0]}">

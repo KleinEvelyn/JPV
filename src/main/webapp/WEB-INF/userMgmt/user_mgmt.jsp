@@ -100,5 +100,14 @@
                 </div>              
             </form>
         </div>
+        <script>
+            // Workaround um die Values (Vor- und Nachname) zu füllen, sorry 4 bad coding ;-) 
+            let vornamePlaceholder = document.getElementsByName("update_vorname")[0].placeholder;
+            document.getElementsByName("update_vorname")[0].value = vornamePlaceholder;
+
+
+            let nachnamePlaceholder = document.getElementsByName("update_nachname")[0].placeholder;
+            document.getElementsByName("update_nachname")[0].value = nachnamePlaceholder;
+        </script>
     </jsp:attribute>
 </template:base>
