@@ -18,7 +18,23 @@ form.stacked .rest {
     background-color: rgba(0, 0, 0, 0.75); 
     color: white;
     margin: 75px auto;
-    padding: 2em 3em;
+    padding: 2em 1em;
+}
+
+.rest textarea{
+    height: 2em;
+    margin: 1em 0;
+    resize: none;
+}
+
+table{
+    background: #fff;
+    color: #000;
+    text-align: left;
+}
+
+table th, table td{
+    padding: 0 0.5em;
 }
 
 /* Formularelemente maximal breit gestapelt */
