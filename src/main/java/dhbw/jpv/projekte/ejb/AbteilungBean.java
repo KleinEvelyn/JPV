@@ -34,4 +34,14 @@ public class AbteilungBean extends EntityBean<Abteilung, Long> {
     public List<Abteilung> findAllSorted() {
         return this.em.createQuery("SELECT c FROM Abteilung c ORDER BY c.name").getResultList();
     }
+    
+    public List<Abteilung> searchAbteilungen(String query) {
+        query = "%" + query + "%";
+        
+        return em.createQuery("SELECT a FROM Abteilung a"
+                            + "  WHERE a.name LIKE :query"
+                            + "     OR a.kuerzel LIKE :query")
+                 .setParameter("query", query)
+                 .getResultList();
+    }
 }

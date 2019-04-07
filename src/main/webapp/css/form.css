@@ -11,6 +11,16 @@ form.stacked .column {
     padding: 2em;
 }
 
+/* Stylings für REST Webservice Page */ 
+
+form.stacked .rest {
+    max-width: 35em;
+    background-color: rgba(0, 0, 0, 0.75); 
+    color: white;
+    margin: 75px auto;
+    padding: 2em 3em;
+}
+
 /* Formularelemente maximal breit gestapelt */
 form.stacked > *,
 form.stacked .column > *,

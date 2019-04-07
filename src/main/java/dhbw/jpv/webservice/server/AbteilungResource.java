@@ -13,10 +13,12 @@ import dhbw.jpv.projekte.jpa.Abteilung;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 /**
  * 
@@ -38,5 +40,10 @@ public class AbteilungResource {
     @Path("{id}")
     public Abteilung getAbteilung(@PathParam("id") long id){
         return this.abteilungBean.findById(id);
+    }
+    
+    @GET
+    public List<Abteilung> searchEvents(@QueryParam("query") @DefaultValue("") String query) {
+        return this.abteilungBean.searchAbteilungen(query);
     }
 }
