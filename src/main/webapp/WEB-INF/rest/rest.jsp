@@ -43,13 +43,14 @@
                     <h1>REST Webservice // Projekt-Overview</h1>
                     <div id="piechart"></div>
                     <div id="abteilungen"></div>
+                    <input id="search" type="text" />
+                    <button id="btn" type="button">Test</button>
                 </div>              
             </form>
         </div>
         <script>
             abteilungResource = new AbteilungResource();
             let reloadAbteilungen = async () => {
-                let searchTerm = document.getElementById("search").value;
                 let response = await abteilungResource.findAbteilungen(searchTerm);
 
                 if ("exception" in response) {
@@ -69,8 +70,12 @@
                     });
                 }
             };
- 
+            
             window.addEventListener("load", () => reloadAbteilungen());
+            let btn = document.getElementById("btn");
+            let searchTerm = document.getElementById("search").value;
+
+            btn.addEventListener("click", () => reloadAbteilungen());
         </script>
     </jsp:attribute>
 </template:base>
