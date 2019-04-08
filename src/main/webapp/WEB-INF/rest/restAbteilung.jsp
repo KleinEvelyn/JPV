@@ -38,7 +38,8 @@
                     <input type="hidden" name="csrf_token" value="${csrf_token}">
                     
                     <%-- REST Webservice --%>
-                    <h1>REST Webservice // Projekt-Overview</h1>
+                    <h1>REST Webservice</h1>
+                    <h3>Suche nach Name oder Kürzel der Abteilung (Volltextsuche)</h3>
                     <textarea id="search" rows="1" placeholder="Suche nach Abteilungen"></textarea>
                     <table >
                         <thead>

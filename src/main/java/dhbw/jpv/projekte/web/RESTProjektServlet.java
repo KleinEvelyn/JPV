@@ -31,14 +31,14 @@ import javax.servlet.http.HttpSession;
  * Formular, mit dem ein neue Kategorie angelegt werden kann, sowie eine Liste,
  * die zum Löschen der Kategorien verwendet werden kann.
  */
-@WebServlet(urlPatterns = {"/app/rest/"})
-public class RESTservlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/app/rest/projekt"})
+public class RESTProjektServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Anfrage an dazugerhörige JSP weiterleiten
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/rest/rest.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/rest/restProjekt.jsp");
         dispatcher.forward(request, response);
 
     }

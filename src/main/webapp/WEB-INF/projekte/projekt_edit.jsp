@@ -60,8 +60,8 @@
                     <span class="required">*</span>
                 </label>
                 <div class="side-by-side">
-                    <input type="text" name="projekt_due_date" value="${projekt_form.values["projekt_due_date"][0]}">
-                    <input type="text" name="projekt_due_time" value="${projekt_form.values["projekt_due_time"][0]}">
+                    <input type="text" name="projekt_due_date" value="${projekt_form.values["projekt_due_date"][0]}" placeholder="${dueDate}">
+                    <input type="text" name="projekt_due_time" value="${projekt_form.values["projekt_due_time"][0]}" placeholder="${dueTime}">
                 </div>
 
                 <label for="projekt_status">
@@ -83,16 +83,25 @@
                     <span class="required">*</span>
                 </label>
                 <div class="side-by-side">
-                    <input type="text" name="projekt_short_text" value="${projekt_form.values["projekt_short_text"][0]}">
+                    <input type="text" name="projekt_short_text" value="${projekt_form.values["projekt_short_text"][0]}" placeholder="${bezeichnung}">
                 </div>
 
                 <label for="projekt_long_text">
                     Beschreibung:
                 </label>
                 <div class="side-by-side">
-                    <textarea name="projekt_long_text"><c:out value="${projekt_form.values['projekt_long_text'][0]}"/></textarea>
+                    <textarea name="projekt_long_text" placeholder="${beschreibung}"><c:out value="${projekt_form.values['projekt_long_text'][0]}"/></textarea>
                 </div>
 
+                <%-- Fehlermeldungen --%>
+                <c:if test="${!empty projekt_form.errors}">
+                    <ul class="errors">
+                        <c:forEach items="${projekt_form.errors}" var="error">
+                            <li>${error}</li>
+                        </c:forEach>
+                    </ul>
+                </c:if>
+                
                 <%-- Button zum Abschicken --%>
                 <div class="side-by-side">
                     <button class="icon-pencil" type="submit" name="action" value="save">
@@ -106,15 +115,24 @@
                     </c:if>
                 </div>
             </div>
-
-            <%-- Fehlermeldungen --%>
-            <c:if test="${!empty projekt_form.errors}">
-                <ul class="errors">
-                    <c:forEach items="${projekt_form.errors}" var="error">
-                        <li>${error}</li>
-                    </c:forEach>
-                </ul>
-            </c:if>
         </form>
+            
+        <script>
+            // Workaround um die Values (Date, Time, Bezeichnung und Beschreibung) zu fÃ¼llen, sorry 4 bad coding ;-) 
+            let datePlaceholder = document.getElementsByName("projekt_due_date")[0].placeholder;
+            let yy = datePlaceholder.substring(0,4);
+            let mm = datePlaceholder.substring(5,7);
+            let dd = datePlaceholder.substring(8,10);            
+            document.getElementsByName("projekt_due_date")[0].value = dd +"." +mm +"." +yy;
+
+            let timePlaceholder = document.getElementsByName("projekt_due_time")[0].placeholder;
+            document.getElementsByName("projekt_due_time")[0].value = timePlaceholder;
+            
+            let bezPlaceholder = document.getElementsByName("projekt_short_text")[0].placeholder;
+            document.getElementsByName("projekt_short_text")[0].value = bezPlaceholder;
+            
+            let besPlaceholder = document.getElementsByName("projekt_long_text")[0].placeholder;
+            document.getElementsByName("projekt_long_text")[0].value = besPlaceholder;
+        </script>  
     </jsp:attribute>
 </template:base>

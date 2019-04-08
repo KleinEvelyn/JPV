@@ -31,7 +31,11 @@
         </div>
         
         <div class="menuitem">
-            <a href="<c:url value="/app/rest/"/>">REST Webservice</a>
+            <a href="<c:url value="/app/rest/abteilung"/>">REST Abteilung</a>
+        </div>
+        
+        <div class="menuitem">
+            <a href="<c:url value="/app/rest/projekt"/>">REST Projekt</a>
         </div>
     </jsp:attribute>
 

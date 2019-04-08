@@ -53,6 +53,12 @@ public class ProjektEditServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         Projekt projekt = this.getRequestedProjekt(request);
+        
+        request.setAttribute("dueDate", projekt.getDueDate());
+        request.setAttribute("dueTime", projekt.getDueTime());
+        request.setAttribute("bezeichnung", projekt.getShortText());
+        request.setAttribute("beschreibung", projekt.getLongText());
+        
         request.setAttribute("edit", projekt.getId() != 0);
                                 
         if (session.getAttribute("abteilung_form") == null) {
